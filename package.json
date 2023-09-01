@@ -1,6 +1,6 @@
 {
   "name": "vue-select-pages",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "vue 分页，远程下拉框",
   "main": "dist/index.js",
   "keywords": [
@@ -52,5 +52,9 @@
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gxt1103/vue-select-pages.git"
   }
 }
