@@ -20,6 +20,9 @@
 |`prop`| 显示名字以及取值的参数名 |`{ name: 'name', value: 'value' }`| `Object` | `-` |
 |`remote`| 是否支持远程调用 |`false`| `Boolean` | `-` |
 |`remote-method`| 远程搜索方法 | ` ` | `function` | `(keyword, callback, page)` |
+|`initValue`| 初始化选中的数据,值为定义的prop.value取得值,需要在data中存在 |` `| `Array` | `-` |
+|`theme`| 主题配置 |` `| `String` | `-` |
+|`style`| 自定义样式 |` `| `Object` | `-` |
 | `selectChange`|回调方法|` `|`function`| `(val)` |
 | `getSelect`|内置方法,选中的值|` `|`function`| `(val)` |
 | `getSelectArray`|内置方法,选中的对象|` `|`function`| `(val)` |

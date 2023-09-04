@@ -1,6 +1,6 @@
 <template>
     <div class="select-vue">
-        <div class="select-box" @click="open">
+        <div class="select-box" :style="style" @click="open">
             <div class="select-tips" v-if="selectData.length == 0">{{tips}}</div>
             <!--选中内容展示-->
             <div class="single-row" v-else>
@@ -10,11 +10,11 @@
                             {{selectData.length>0?selectData[0][prop.name]:''}}
                         </template>
                         <template v-else>
-                            <div class="label-block" v-for="(list, index) in selectData.slice(0, showCount)" :key="index">
+                            <div class="label-block" :style="{background:theme?theme:'#409eff'}" v-for="(list, index) in selectData.slice(0, showCount)" :key="index">
                                 <span style="width:calc(100% - 20px)">{{ list[prop.name] }}</span>
                                 <i class="el-icon-close" @click="removeSelect(index)"></i>
                             </div>
-                            <div class="label-block" v-if="selectData.length>showCount">
+                            <div class="label-block" :style="{background:theme?theme:'#409eff'}" v-if="selectData.length>showCount">
                                 + {{selectData.length - showCount}}
                             </div>
                         </template>
@@ -33,10 +33,10 @@
             </div>
             <div class="scroll-body" v-if="optionData.length>0">
                 <div class="select-option" :class="{'selected': radio && selectIds.indexOf(list[prop.value]) != -1}" v-for="(list, index) in optionData.slice(isPage && !remote?(page-1)*pageSize:0, (isPage && !remote?(page*pageSize):optionData.length))" :key="index" @click="selectSingle(list)">
-                    <div class="select-option-content" v-if="radio">
+                    <div class="select-option-content" :style="{background:theme?theme:'#409eff'}" v-if="radio">
                         {{ texts(list) }}
                     </div>
-                    <label class="select-checkbox" v-else>
+                    <label class="select-checkbox" :style="{'background-color':theme,'border-color':theme}" v-else>
                         <span class="select-checkbox-input" :class="{'is-checked': selectIds.indexOf(list[prop.value]) != -1}"></span> {{ texts(list) }}
                     </label>
                 </div>
@@ -117,7 +117,19 @@ export default {
             type: Boolean,
             default: false
         },
-        remoteMethod: Function
+        remoteMethod: Function,
+        initValue:{//初始化选中的数据, 需要在data中存在
+            type: Array,
+            default:()=>{return []}
+        },
+        style:{ //组件显示style
+            type:Object,
+            default: ()=>{ return {}}
+        },
+        theme:{ //主题配置
+            type:String,
+            default: ''
+        }
     },
     watch:{
         data: {
@@ -155,6 +167,14 @@ export default {
             this.sourceData = JSON.parse(JSON.stringify(data));
             this.optionData = JSON.parse(JSON.stringify(data));
             this.totalPage = Math.ceil(this.optionData.length/this.pageSize);
+            if(Object.prototype.toString.call(this.initValue) == '[object Array]' && this.initValue.length>0){
+                this.selectIds = this.initValue;
+                this.optionData.forEach(d => {
+                    if(this.initValue.indexOf(d[this.prop.value]) != -1){
+                        this.selectData.push(d);
+                    }
+                })
+            }
         },
         filters(){
             if (this.remote && typeof this.remoteMethod === 'function') {
