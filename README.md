@@ -1,50 +1,36 @@
 <h1 align="center">vue-select-page</h1>
 
 ## 说明
->下拉框分页使用请求后数据
->使用远程分页搜做
+>下拉框分页使用请求后数据<br>
+>使用远程分页搜索
 
-##功能说明
+## 效果展示
+![单选](http://img6.lwhs.me/mail/common/radio.png)
+![多选](http://img6.lwhs.me/mail/common/checkbox.png)
 
-**filterable**<br/>
-是否需要搜索
-类型:`Boolean`
+## 功能说明
 
-**isPage**<br/>
-是否需要分页
-类型:`Boolean`
+|参数|描述|默认值|类型|回调参数|
+|:---|---|---|---|---|
+| `filterable`|是否需支持搜索|`true`|`Boolean`| `-` |
+|`isPage`|是否需要分页|`false`|`Boolean`| `-` |
+|`pageSize`|每页显示多少条|`10`|`Number`| `-` |
+|`radio`|是否单选|`false`|`Boolean`| `-` |
+|`clickClose`|是否点击后关闭|`false`| `Boolean` | `-` |
+|`prop`| 显示名字以及取值的参数名 |`{ name: 'name', value: 'value' }`| `Object` | `-` |
+|`remote`| 是否支持远程调用 |`false`| `Boolean` | `-` |
+|`remote-method`| 远程搜索方法 | ` ` | `function` | `(keyword, callback, page)` |
+| `selectChange`|回调方法|` `|`function`| `(val)` |
+| `getSelect`|内置方法,选中的值|` `|`function`| `(val)` |
+| `getSelectArray`|内置方法,选中的对象|` `|`function`| `(val)` |
+| `clearSelect`|内置方法,清空选中的内容|` `|`function`| `(val)` |
 
-**pageSize**<br/>
-每页显示多少条，默认10条
-类型:`Number`
-
-**radio**<br/>
-是否单选
-类型:`Boolean`
-
-**clickClose**<br/>
-是否点击后关闭
-类型:`Boolean`
-
-**prop**<br/>
-显示名字以及取值的参数名
-类型:`Object`<br/>
-默认: `{
-    name: 'name',
-    value: 'value'
-}`
-
-**remote**<br/>
-是否支持远程调用
-类型:`Boolean`
-
-**remoteMethod**<br/>
-远程方法调用
-类型:`Function`
-参数:`(keyword, callback, page)`
-
-
-##安装说明
+## 安装说明
 ```bash
 $ npm install --save vue-select-pages
+```
+
+## 引用说明
+```bash
+$ import selectPage from 'vue-select-pages'
 ```
