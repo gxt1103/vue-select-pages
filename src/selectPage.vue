@@ -12,7 +12,7 @@
                         <template v-else>
                             <div class="label-block" :style="{background:theme?theme:'#409eff'}" v-for="(list, index) in selectData.slice(0, showCount)" :key="index">
                                 <span style="width:calc(100% - 20px)">{{ list[prop.name] }}</span>
-                                <i class="el-icon-close" @click="removeSelect(index)"></i>
+                                <i class="el-icon-close" @click.stop="removeSelect(index)"></i>
                             </div>
                             <div class="label-block" :style="{background:theme?theme:'#409eff'}" v-if="selectData.length>showCount">
                                 + {{selectData.length - showCount}}
@@ -429,7 +429,7 @@ export default {
                 .search-icon{
                     position: absolute;
                     left:10px;
-                    top:0;
+                    top:5px;
                     img{
                         height:11px;
                         width:11px;
