@@ -22,7 +22,7 @@
 |`remote-method`| 远程搜索方法 | ` ` | `function` | `(keyword, callback, page)` |
 |`initValue`| 初始化选中的数据,值为定义的prop.value取得值,需要在data中存在 |` `| `Array` | `-` |
 |`theme`| 主题配置 |` `| `String` | `-` |
-|`style`| 自定义样式 |` `| `Object` | `-` |
+|`styles`| 自定义样式 |` `| `Object` | `-` |
 | `selectChange`|回调方法|` `|`function`| `(data)` |
 | `getSelect`|内置方法,选中的值|` `|`function`| `(data)` |
 | `getSelectArray`|内置方法,选中的对象|` `|`function`| `(data)` |

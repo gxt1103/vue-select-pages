@@ -1,6 +1,6 @@
 <template>
     <div class="select-vue">
-        <div class="select-box" :style="style" @click="open">
+        <div class="select-box" :style="styles" @click="open">
             <div class="select-tips" v-if="selectData.length == 0">{{tips}}</div>
             <!--选中内容展示-->
             <div class="single-row" v-else>
@@ -122,7 +122,7 @@ export default {
             type: Array,
             default:()=>{return []}
         },
-        style:{ //组件显示style
+        styles:{ //组件显示style
             type:Object,
             default: ()=>{ return {}}
         },
