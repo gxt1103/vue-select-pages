@@ -33,7 +33,7 @@
             </div>
             <div class="scroll-body" v-if="optionData.length>0">
                 <div class="select-option" :class="{'selected': radio && selectIds.indexOf(list[prop.value]) != -1}" v-for="(list, index) in optionData.slice(isPage && !remote?(page-1)*pageSize:0, (isPage && !remote?(page*pageSize):optionData.length))" :key="index" @click="selectSingle(list)">
-                    <div class="select-option-content" :style="{background:theme?theme:'#409eff'}" v-if="radio">
+                    <div class="select-option-content" v-if="radio">
                         {{ texts(list) }}
                     </div>
                     <label class="select-checkbox" :style="{'background-color':theme,'border-color':theme}" v-else>
