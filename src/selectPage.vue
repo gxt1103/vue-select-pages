@@ -420,6 +420,7 @@ export default {
                 input{
                     border:0;
                     border-bottom:1px solid #DCDFE6;
+                    box-sizing: border-box;
                     font-size: 12px;
                     outline: none;
                     padding:5px 5px 5px 15px;
