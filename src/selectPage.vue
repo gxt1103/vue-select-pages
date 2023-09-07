@@ -118,10 +118,7 @@ export default {
             default: false
         },
         remoteMethod: Function,
-        initValue:{//初始化选中的数据, 需要在data中存在
-            type: Array,
-            default:()=>{return []}
-        },
+        initValue: Array || Number || String, //初始化选中的数据, 需要在data中存在
         styles:{ //组件显示style
             type:Object,
             default: ()=>{ return {}}
@@ -167,13 +164,22 @@ export default {
             this.sourceData = JSON.parse(JSON.stringify(data));
             this.optionData = JSON.parse(JSON.stringify(data));
             this.totalPage = Math.ceil(this.optionData.length/this.pageSize);
-            if(Object.prototype.toString.call(this.initValue) == '[object Array]' && this.initValue.length>0){
+            if(Object.prototype.toString.call(this.initValue) === '[object Array]' && this.initValue.length>0){
                 this.selectIds = this.initValue;
                 this.optionData.forEach(d => {
-                    if(this.initValue.indexOf(d[this.prop.value]) != -1){
+                    if(this.initValue.indexOf(d[this.prop.value]) !== -1){
                         this.selectData.push(d);
                     }
                 })
+            } else {
+                if(this.initValue){
+                    this.selectIds = [this.initValue];
+                    this.optionData.forEach(d => {
+                        if(this.initValue === d[this.prop.value]){
+                            this.selectData.push(d);
+                        }
+                    })
+                }
             }
         },
         filters(){
