@@ -134,6 +134,9 @@ export default {
                 this.initData(val)
             },
             deep: true
+        },
+        initValue(){
+            this.setValue();
         }
     },
     data(){
@@ -160,10 +163,7 @@ export default {
         this.loadData();
     },
     methods:{
-        initData(data){
-            this.sourceData = JSON.parse(JSON.stringify(data));
-            this.optionData = JSON.parse(JSON.stringify(data));
-            this.totalPage = Math.ceil(this.optionData.length/this.pageSize);
+        setValue(){
             if(Object.prototype.toString.call(this.initValue) === '[object Array]' && this.initValue.length>0){
                 this.selectIds = this.initValue;
                 this.optionData.forEach(d => {
@@ -172,7 +172,7 @@ export default {
                     }
                 })
             } else {
-                if(this.initValue){
+                if(this.initValue){ //设置初始值
                     this.selectIds = [this.initValue];
                     this.optionData.forEach(d => {
                         if(this.initValue === d[this.prop.value]){
@@ -181,6 +181,12 @@ export default {
                     })
                 }
             }
+        },
+        initData(data){
+            this.sourceData = JSON.parse(JSON.stringify(data));
+            this.optionData = JSON.parse(JSON.stringify(data));
+            this.totalPage = Math.ceil(this.optionData.length/this.pageSize);
+            this.setValue();
         },
         filters(){
             if (this.remote && typeof this.remoteMethod === 'function') {
