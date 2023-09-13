@@ -1,6 +1,6 @@
 <template>
     <div class="select-vue">
-        <div class="select-box" :style="styles" @click="open">
+        <div class="select-box" ref="selectPageRef" :style="styles" @click="open">
             <div class="select-tips" v-if="selectData.length == 0">{{tips}}</div>
             <!--选中内容展示-->
             <div class="single-row" v-else>
@@ -26,7 +26,7 @@
         </div>
         
         <!--展开内容-->
-        <div class="select-body" :class="{'hide': !show}" :style="dropStyle">
+        <div class="select-body" ref="selectOptionRef" :class="{'hide': !show}" :style="dropStyle">
             <div class="select-search" v-if="filterable">
                 <span class="search-icon"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjkzNDQ2NjE1MTg5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjQwMjgiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+PHBhdGggZD0iTTUxMS45NzU4OTIgMTkxLjI5Njk0NWEyMy4yMzQ2NjEgMjMuMjM0NjYxIDAgMSAwIDAgNDYuOTM0MDE0IDIwMi4zMTU4MDggMjAyLjMxNTgwOCAwIDAgMSAyMDIuMzE1ODA4IDIwMi4zMTU4MDggMjMuMjM0NjYxIDIzLjIzNDY2MSAwIDAgMCA0Ni45MzQwMTUgMCAyNDkuMTkxNzM2IDI0OS4xOTE3MzYgMCAwIDAtMjQ5LjI0OTgyMy0yNDkuMjQ5ODIyeiIgZmlsbD0iIzUxNTE1MSIgcC1pZD0iNDAyOSI+PC9wYXRoPjxwYXRoIGQ9Ik0xMDA5LjMxMzgwNSA5NTguMzg5MjY4bC0xNzIuODA3Nzg5LTE3Mi44MDc3ODlhNDc1LjAzMjYzOCA0NzUuMDMyNjM4IDAgMSAwLTU0LjM2OTEwNiA1My41NTU4OTNsMTczLjIxNDM5NSAxNzMuMjE0Mzk2YTM4LjE2MjkzIDM4LjE2MjkzIDAgMSAwIDUzLjk2MjUtNTMuOTYyNXogbS01MzMuMTE5MjktOTAuMDM0MzFhMzkzLjA3MjM3MyAzOTMuMDcyMzczIDAgMSAxIDM5My45NDM2NzItMzkyLjA4NDkgMzkzLjA3MjM3MyAzOTMuMDcyMzczIDAgMCAxLTM5My45NDM2NzIgMzkyLjA4NDl6IiBmaWxsPSIjNTE1MTUxIiBwLWlkPSI0MDMwIj48L3BhdGg+PC9zdmc+"></span>
                 <input type="text" :placeholder="searchTips" v-model="keyword" @input="filters">
@@ -233,14 +233,19 @@ export default {
         },
         open(e){
             this.show = !this.show;
-            if(e.clientY+248 > document.body.clientHeight){
-                this.dropStyle = {
-                    bottom: '42px',
-                    top: 'auto'
+            this.$nextTick(()=>{
+                if(e.clientY+248 > document.body.clientHeight){
+                    this.dropStyle = {
+                        marginTop: (-(this.$refs.selectPageRef.clientHeight + this.$refs.selectOptionRef.clientHeight + 10))+'px',
+                        width: this.$refs.selectPageRef.clientWidth+'px'
+                    }
+                } else{
+                    this.dropStyle = {
+                        marginTop: '10px',
+                        width: this.$refs.selectPageRef.clientWidth+'px'
+                    }
                 }
-            } else{
-                this.dropStyle = {}
-            }
+            })
         },
         closed(){
             this.show = false;
@@ -312,7 +317,6 @@ export default {
 </script>
 <style lang="scss" scoped>
     .select-vue{
-        position: relative;
         .select-box{
             background: #fff;
             border: 1px solid #E6E6E6;
@@ -325,6 +329,7 @@ export default {
             outline: none;
             position: relative;
             text-overflow: ellipsis;
+            width:200px;
         }
        
         .select-tips{
@@ -409,12 +414,9 @@ export default {
             display: none;
         }
         .select-body{
-            position: absolute;
-            left: 0;
-            top: 42px;
+            position: fixed;
             padding: 5px 0;
             z-index: 999;
-            width: 100%;
             min-width: fit-content;
             border: 1px solid #E6E6E6;
             background-color: #fff;
