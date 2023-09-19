@@ -434,6 +434,7 @@ export default {
                 input{
                     border:0;
                     border-bottom:1px solid #DCDFE6;
+                    box-shadow: none;
                     box-sizing: border-box;
                     font-size: 12px;
                     outline: none;
@@ -441,12 +442,14 @@ export default {
                     width:100%;
                 }
                 .search-icon{
+                    line-height:initial;
                     position: absolute;
                     left:10px;
                     top:5px;
                     img{
                         height:11px;
                         width:11px;
+                        vertical-align: middle;
                     }
                 }
             }
