@@ -193,6 +193,7 @@ export default {
                 this.page = 1;
                 this.loadData();
             } else {
+                this.page = 1;
                 const newData = JSON.parse(JSON.stringify(this.sourceData));
                 let filterData = [];
                 if(!this.keyword) {
