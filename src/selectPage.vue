@@ -150,7 +150,8 @@ export default {
             sourceData: [],
             optionData: [], //下拉数据
             dropStyle: {},
-            loading: false
+            loading: false,
+            initLeft: ''
         }
     },
     mounted(){
@@ -246,6 +247,7 @@ export default {
                         width: this.$refs.selectPageRef.clientWidth+'px'
                     }
                 }
+                this.getPosition();
             })
         },
         closed(){
@@ -303,6 +305,17 @@ export default {
             if(this.page<this.totalPage) this.page++;
             this.loadData();
         },
+        getPosition(){ //边界处理
+            let popWidth = this.$refs.selectOptionRef.offsetWidth;
+            let selectWidth = this.$refs.selectPageRef.offsetWidth;
+            let screenWidth = document.body.clientWidth;
+            if(!this.initLeft) this.initLeft = this.$refs.selectOptionRef.offsetLeft;
+            if(this.initLeft + popWidth > screenWidth){
+                this.$set(this.dropStyle, 'right', screenWidth - selectWidth - this.initLeft + 'px');
+            } else {
+                this.$set(this.dropStyle, 'right', 'auto');
+            }
+        },
         loadData(){ //远程数据加载
             if (this.remote && typeof this.remoteMethod === 'function') {
                 this.loading = true;
@@ -310,7 +323,14 @@ export default {
                     this.optionData = data;
                     this.totalPage = totalPage?totalPage:1;
                     this.loading = false;
+                    this.$nextTick(()=> {
+                        this.getPosition();
+                    })
                 }, this.page)
+            } else {
+                this.$nextTick(()=> {
+                    this.getPosition();
+                })
             }
         }
     }
@@ -470,9 +490,9 @@ export default {
                     .select-option-content{
                         display: flex;
                         position: relative;
-                        overflow: hidden;
+                        // overflow: hidden;
                         white-space: nowrap;
-                        text-overflow: ellipsis;
+                        // text-overflow: ellipsis;
                         color: #666;
                         width: calc(100% - 20px);
                     }
