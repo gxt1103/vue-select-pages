@@ -29,7 +29,7 @@
         <div class="select-body" ref="selectOptionRef" :class="{'hide': !show}" :style="dropStyle">
             <div class="select-search" v-if="filterable">
                 <span class="search-icon"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjkzNDQ2NjE1MTg5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjQwMjgiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+PHBhdGggZD0iTTUxMS45NzU4OTIgMTkxLjI5Njk0NWEyMy4yMzQ2NjEgMjMuMjM0NjYxIDAgMSAwIDAgNDYuOTM0MDE0IDIwMi4zMTU4MDggMjAyLjMxNTgwOCAwIDAgMSAyMDIuMzE1ODA4IDIwMi4zMTU4MDggMjMuMjM0NjYxIDIzLjIzNDY2MSAwIDAgMCA0Ni45MzQwMTUgMCAyNDkuMTkxNzM2IDI0OS4xOTE3MzYgMCAwIDAtMjQ5LjI0OTgyMy0yNDkuMjQ5ODIyeiIgZmlsbD0iIzUxNTE1MSIgcC1pZD0iNDAyOSI+PC9wYXRoPjxwYXRoIGQ9Ik0xMDA5LjMxMzgwNSA5NTguMzg5MjY4bC0xNzIuODA3Nzg5LTE3Mi44MDc3ODlhNDc1LjAzMjYzOCA0NzUuMDMyNjM4IDAgMSAwLTU0LjM2OTEwNiA1My41NTU4OTNsMTczLjIxNDM5NSAxNzMuMjE0Mzk2YTM4LjE2MjkzIDM4LjE2MjkzIDAgMSAwIDUzLjk2MjUtNTMuOTYyNXogbS01MzMuMTE5MjktOTAuMDM0MzFhMzkzLjA3MjM3MyAzOTMuMDcyMzczIDAgMSAxIDM5My45NDM2NzItMzkyLjA4NDkgMzkzLjA3MjM3MyAzOTMuMDcyMzczIDAgMCAxLTM5My45NDM2NzIgMzkyLjA4NDl6IiBmaWxsPSIjNTE1MTUxIiBwLWlkPSI0MDMwIj48L3BhdGg+PC9zdmc+"></span>
-                <input type="text" :placeholder="searchTips" v-model="keyword" @input="filters">
+                <input type="text" ref="filterInput" :placeholder="searchTips" v-model="keyword" @input="filters">
             </div>
             <div class="scroll-body" v-if="optionData.length>0">
                 <div class="select-option" :class="{'selected': radio && selectIds.indexOf(list[prop.value]) != -1}" v-for="(list, index) in optionData.slice(isPage && !remote?(page-1)*pageSize:0, (isPage && !remote?(page*pageSize):optionData.length))" :key="index" @click="selectSingle(list)">
@@ -249,6 +249,7 @@ export default {
                 }
                 this.getPosition();
             })
+            if(this.show) this.$refs.filterInput.focus();
         },
         closed(){
             this.show = false;
@@ -458,6 +459,8 @@ export default {
                     box-shadow: none;
                     box-sizing: border-box;
                     font-size: 12px;
+                    height: 30px;
+                    line-height: 30px;
                     outline: none;
                     padding:5px 5px 5px 15px;
                     width:100%;
