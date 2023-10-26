@@ -248,8 +248,8 @@ export default {
                     }
                 }
                 this.getPosition();
+                if(this.show) this.$refs.filterInput.focus();
             })
-            if(this.show) this.$refs.filterInput.focus();
         },
         closed(){
             this.show = false;
