@@ -1,6 +1,6 @@
 <template>
     <div class="select-vue">
-        <div class="select-box" ref="selectPageRef" :style="styles" @click="open">
+        <div class="select-box" :class="{'select-disabled':disabled}" ref="selectPageRef" :style="styles" @click="open">
             <div class="select-tips" v-if="selectData.length == 0">{{tips}}</div>
             <!--选中内容展示-->
             <div class="single-row" v-else>
@@ -126,6 +126,10 @@ export default {
         theme:{ //主题配置
             type:String,
             default: ''
+        },
+        disabled:{
+            type: Boolean,
+            default: false
         }
     },
     watch:{
@@ -203,14 +207,14 @@ export default {
                     if(this.showTitle.length){ //针对显示多个标题
                     
                         this.showTitle.forEach(s =>{
-                            let newFilter = newData.filter(d => d[s].indexOf(this.keyword) > -1);
+                            let newFilter = newData.filter(d => d[s].toLowerCase().indexOf(this.keyword.toLowerCase()) > -1);
                             newFilter.forEach(d =>{
                                 let index = filterData.filter(f => f[this.prop.value] == d[this.prop.value])
                                 if(index == -1) filterData.push(d);
                             })
                         })
                     } else {
-                        filterData = newData.filter(d => d[this.prop.name].indexOf(this.keyword) > -1);
+                        filterData = newData.filter(d => d[this.prop.name].toLowerCase().indexOf(this.keyword.toLowerCase()) > -1);
                     }
                 }
                 
@@ -234,7 +238,9 @@ export default {
             return txts
         },
         open(e){
+            if(this.disabled) return;
             this.show = !this.show;
+            if(!this.show) this.keyword = '';
             this.$nextTick(()=>{
                 if(e.clientY+248 > document.body.clientHeight){
                     this.dropStyle = {
@@ -253,8 +259,10 @@ export default {
         },
         closed(){
             this.show = false;
+            this.keyword = '';
         },
         removeSelect(index){
+            if(this.disabled) return;
             this.selectIds.splice(index, 1);
             this.selectData.splice(index, 1);
         },
@@ -353,6 +361,9 @@ export default {
             text-overflow: ellipsis;
             width:200px;
         }
+        .select-disabled{
+            cursor: not-allowed;
+        }
        
         .select-tips{
             color: #999;
@@ -399,6 +410,15 @@ export default {
                         font-size: 12px;
                         cursor: pointer;
                         display: flex; 
+                    }
+                }
+            }
+        }
+        .select-disabled{
+            .single-row{
+                .scroll{
+                    .label-block{
+                        background:rgb(83, 169, 255);
                     }
                 }
             }
