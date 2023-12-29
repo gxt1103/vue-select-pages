@@ -138,9 +138,6 @@ export default {
                 this.initData(val)
             },
             deep: true
-        },
-        initValue(){
-            this.setValue();
         }
     },
     data(){
