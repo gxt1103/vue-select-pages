@@ -166,6 +166,8 @@ export default {
     },
     methods:{
         setValue(value){
+            this.selectIds = [];
+            this.selectData = [];
             let initValue = this.initValue;
             if(value) initValue = value;
             if(Object.prototype.toString.call(initValue) === '[object Array]' && initValue.length>0){
@@ -176,7 +178,7 @@ export default {
                     }
                 })
             } else {
-                if(initValue){ //设置初始值
+                if(initValue && this.selectIds.indexOf(initValue) == -1){ //设置初始值
                     this.selectIds = [initValue];
                     this.optionData.forEach(d => {
                         if(initValue === d[this.prop.value]){
@@ -302,12 +304,7 @@ export default {
             return selectedArray;
         },
         clearSelect(value){
-            if(value){
-                this.setValue(value);
-            } else {
-                this.selectIds = [];
-                this.selectData = [];
-            }
+            this.setValue(value);
         },
         prev(){
             if(this.page>1) this.page--;
