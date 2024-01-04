@@ -165,19 +165,21 @@ export default {
         this.loadData();
     },
     methods:{
-        setValue(){
-            if(Object.prototype.toString.call(this.initValue) === '[object Array]' && this.initValue.length>0){
-                this.selectIds = this.initValue;
+        setValue(value){
+            let initValue = this.initValue;
+            if(value) initValue = value;
+            if(Object.prototype.toString.call(initValue) === '[object Array]' && initValue.length>0){
+                this.selectIds = initValue;
                 this.optionData.forEach(d => {
-                    if(this.initValue.indexOf(d[this.prop.value]) !== -1){
+                    if(initValue.indexOf(d[this.prop.value]) !== -1){
                         this.selectData.push(d);
                     }
                 })
             } else {
-                if(this.initValue){ //设置初始值
-                    this.selectIds = [this.initValue];
+                if(initValue){ //设置初始值
+                    this.selectIds = [initValue];
                     this.optionData.forEach(d => {
-                        if(this.initValue === d[this.prop.value]){
+                        if(initValue === d[this.prop.value]){
                             this.selectData.push(d);
                         }
                     })
@@ -299,9 +301,13 @@ export default {
             }
             return selectedArray;
         },
-        clearSelect(){
-            this.selectIds = [];
-            this.selectData = [];
+        clearSelect(value){
+            if(value){
+                this.setValue(value);
+            } else {
+                this.selectIds = [];
+                this.selectData = [];
+            }
         },
         prev(){
             if(this.page>1) this.page--;
