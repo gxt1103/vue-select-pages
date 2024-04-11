@@ -266,6 +266,7 @@ export default {
             if(this.disabled) return;
             this.selectIds.splice(index, 1);
             this.selectData.splice(index, 1);
+            this.$emit('selectChange', this.radio?this.selectIds[0]:this.selectIds)
         },
         selectSingle(list){
             if(this.radio){
