@@ -118,7 +118,7 @@ export default {
             default: false
         },
         remoteMethod: Function,
-        initValue: Array || Number || String, //初始化选中的数据, 需要在data中存在
+        initValue: [Array, Number, String], //初始化选中的数据, 需要在data中存在
         styles:{ //组件显示style
             type:Object,
             default: ()=>{ return {}}
