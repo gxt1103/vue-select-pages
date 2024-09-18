@@ -152,7 +152,8 @@ export default {
             optionData: [], //下拉数据
             dropStyle: {},
             loading: false,
-            initLeft: ''
+            initLeft: '',
+            isComposing: false
         }
     },
     mounted(){
@@ -163,6 +164,14 @@ export default {
             }
         })
         this.loadData();
+        this.$nextTick(() => {
+            this.$refs.filterInput.$el.addEventListener('compositionstart', e => {
+                this.isComposing = true;
+            })
+            this.$refs.filterInput.$el.addEventListener('compositionend', e => {
+                this.isComposing = false;
+            })
+        })
     },
     methods:{
         setValue(value){
@@ -195,6 +204,7 @@ export default {
             this.setValue();
         },
         filters(){
+            if(this.isComposing) return;
             if (this.remote && typeof this.remoteMethod === 'function') {
                 this.page = 1;
                 this.loadData();
