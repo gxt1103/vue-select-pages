@@ -165,11 +165,12 @@ export default {
         })
         this.loadData();
         this.$nextTick(() => {
-            this.$refs.filterInput.$el.addEventListener('compositionstart', e => {
+            this.$refs.filterInput.addEventListener('compositionstart', e => {
                 this.isComposing = true;
             })
-            this.$refs.filterInput.$el.addEventListener('compositionend', e => {
+            this.$refs.filterInput.addEventListener('compositionend', e => {
                 this.isComposing = false;
+                this.filters();
             })
         })
     },
