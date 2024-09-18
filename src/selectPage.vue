@@ -593,13 +593,13 @@ export default {
                 .select-loading{
                     align-items: center;
                     background: rgba(0, 0, 0, 0.4);
-                    bottom:0;
+                    bottom:34px;
                     display: flex;
                     left:0;
                     justify-content: center;
-                    position: absolute;
+                    position: fixed;
                     right:0;
-                    top:0;
+                    top:40px;
                     .canvasBox {
                         align-items: center;
                         border-radius: 50%;
