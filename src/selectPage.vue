@@ -181,10 +181,13 @@ export default {
             let initValue = this.initValue;
             if(value) initValue = value;
             if(Object.prototype.toString.call(initValue) === '[object Array]' && initValue.length>0){
-                this.selectIds = initValue;
                 if(initValue[0][this.prop.value]){ //如果传入数组对象直接显示
+                    initValue.forEach(d => {
+                        this.selectIds.push(d[this.prop.value]);
+                    })
                     this.selectData = [...initValue];
                 } else {
+                    this.selectIds = initValue;
                     this.optionData.forEach(d => {
                         if(initValue.indexOf(d[this.prop.value]) !== -1){
                             this.selectData.push(d);
