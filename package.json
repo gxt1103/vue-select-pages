@@ -1,6 +1,6 @@
 {
   "name": "vue-select-pages",
-  "version": "1.5.6",
+  "version": "1.5.7",
   "description": "vue 分页，远程下拉框",
   "main": "src/index.js",
   "keywords": [

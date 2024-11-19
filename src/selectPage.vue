@@ -165,13 +165,15 @@ export default {
         })
         this.loadData();
         this.$nextTick(() => {
-            this.$refs.filterInput.addEventListener('compositionstart', e => {
-                this.isComposing = true;
-            })
-            this.$refs.filterInput.addEventListener('compositionend', e => {
-                this.isComposing = false;
-                this.filters();
-            })
+            if(this.$refs.filterInput) {
+                this.$refs.filterInput.addEventListener('compositionstart', e => {
+                    this.isComposing = true;
+                })
+                this.$refs.filterInput.addEventListener('compositionend', e => {
+                    this.isComposing = false;
+                    this.filters();
+                })
+            }
         })
     },
     methods:{
@@ -335,6 +337,7 @@ export default {
             this.loadData();
         },
         getPosition(){ //边界处理
+            if(!this.$refs.selectOptionRef && !this.$refs.selectPageRef) return
             let popWidth = this.$refs.selectOptionRef.offsetWidth;
             let selectWidth = this.$refs.selectPageRef.offsetWidth;
             let screenWidth = document.body.clientWidth;
