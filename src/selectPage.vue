@@ -153,7 +153,8 @@ export default {
             dropStyle: {},
             loading: false,
             initLeft: '',
-            isComposing: false
+            isComposing: false,
+            positionY: 0
         }
     },
     mounted(){
@@ -264,17 +265,7 @@ export default {
             this.show = !this.show;
             if(!this.show) this.keyword = '';
             this.$nextTick(()=>{
-                if(e.clientY+248 > document.body.clientHeight){
-                    this.dropStyle = {
-                        marginTop: (-(this.$refs.selectPageRef.clientHeight + this.$refs.selectOptionRef.clientHeight + 10))+'px',
-                        width: this.$refs.selectPageRef.clientWidth+'px'
-                    }
-                } else{
-                    this.dropStyle = {
-                        marginTop: '10px',
-                        width: this.$refs.selectPageRef.clientWidth+'px'
-                    }
-                }
+                this.positionY = e.clientY;
                 this.getPosition();
                 if(this.show) this.$refs.filterInput.focus();
             })
@@ -338,6 +329,17 @@ export default {
         },
         getPosition(){ //边界处理
             if(!this.$refs.selectOptionRef && !this.$refs.selectPageRef) return
+            if(this.positionY+this.$refs.selectOptionRef.clientHeight > document.body.clientHeight){
+                this.dropStyle = {
+                    marginTop: (-(this.$refs.selectPageRef.clientHeight + this.$refs.selectOptionRef.clientHeight + 10))+'px',
+                    width: this.$refs.selectPageRef.clientWidth+'px'
+                }
+            } else{
+                this.dropStyle = {
+                    marginTop: '10px',
+                    width: this.$refs.selectPageRef.clientWidth+'px'
+                }
+            }
             let popWidth = this.$refs.selectOptionRef.offsetWidth;
             let selectWidth = this.$refs.selectPageRef.offsetWidth;
             let screenWidth = document.body.clientWidth;
