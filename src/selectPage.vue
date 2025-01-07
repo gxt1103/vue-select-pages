@@ -183,8 +183,8 @@ export default {
             this.selectData = [];
             let initValue = this.initValue;
             if(value) initValue = value;
-            if(Object.prototype.toString.call(initValue) === '[object Array]' && initValue.length>0){
-                if(initValue[0][this.prop.value]){ //如果传入数组对象直接显示
+            if(Object.prototype.toString.call(initValue) === '[object Array]'){
+                if(initValue.length>0 && initValue[0][this.prop.value]){ //如果传入数组对象直接显示
                     initValue.forEach(d => {
                         this.selectIds.push(d[this.prop.value]);
                     })
