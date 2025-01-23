@@ -136,7 +136,7 @@ export default {
     watch:{
         data: {
             handler(val){
-                this.initData(val)
+                this.initData(val, 'watch')
             },
             deep: true
         }
@@ -210,11 +210,11 @@ export default {
                 }
             }
         },
-        initData(data){
+        initData(data, type){
             this.sourceData = JSON.parse(JSON.stringify(data));
             this.optionData = JSON.parse(JSON.stringify(data));
             this.totalPage = Math.ceil(this.optionData.length/this.pageSize);
-            this.setValue();
+            if(!type) this.setValue();
         },
         filters(){
             if(this.isComposing) return;
