@@ -23,6 +23,7 @@
             </div>
             <!--关闭-->
             <i class="select-close" :class="{'select-expend': show}"></i>
+            <div class="close-pop-page" v-if="selectData.length" @click="clearAll">x</div>
         </div>
         
         <!--展开内容-->
@@ -366,6 +367,10 @@ export default {
                     this.getPosition();
                 })
             }
+        },
+        clearAll(){
+            this.setValue([]);
+            this.$emit('selectChange', this.radio?this.selectIds[0]:this.selectIds)
         }
     }
 }
@@ -385,6 +390,11 @@ export default {
             position: relative;
             text-overflow: ellipsis;
             width:200px;
+            &:hover{
+                .close-pop-page{
+                    display: inline-block;
+                }
+            }
         }
         .select-disabled{
             cursor: not-allowed;
@@ -416,6 +426,7 @@ export default {
                 .label-block{
                     background: rgb(64, 158, 255);
                     display: flex;
+                    flex: 1;
                     height: 26px;
                     line-height: 26px;
                     position: relative;
@@ -424,9 +435,12 @@ export default {
                     border-radius: 3px;
                     align-items: baseline;
                     color: #FFF;
+                    width: 50%;
                     span{
-                        display: flex;
+                        display: inline-block;
                         color: #FFF;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                         white-space: nowrap;
                     }
                     i{
@@ -472,6 +486,21 @@ export default {
                 transform: translate(-60%) rotate(-45deg);
                 width:8px;
             }
+        }
+        .close-pop-page{
+            background: #fff;
+            border: 1px solid #bbb;
+            border-radius: 100%;
+            color: #bbb;
+            cursor: pointer;
+            display: none;
+            font-size: 10px;
+            line-height: 12px;
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            text-align: center;
+            width: 12px;
         }
         .select-expend{
             margin-top: -4px;
