@@ -11,7 +11,7 @@
                         </template>
                         <template v-else>
                             <div class="label-block" :style="{background:theme?theme:'#409eff'}" v-for="(list, index) in selectData.slice(0, showCount)" :key="index">
-                                <span style="width:calc(100% - 20px)">{{ list[prop.name] }}</span>
+                                <span>{{ list[prop.name] }}</span>
                                 <i class="el-icon-close" @click.stop="removeSelect(index)"></i>
                             </div>
                             <div class="label-block" :style="{background:theme?theme:'#409eff'}" v-if="selectData.length>showCount">
@@ -413,7 +413,7 @@ export default {
             top: 0;
             bottom: 0px;
             left: 0px;
-            right: 30px;
+            right: 20px;
             overflow: auto hidden;
             .scroll{
                 overflow-y: hidden;
@@ -421,20 +421,21 @@ export default {
                     display: flex;
                     flex-wrap: nowrap;
                     line-height: 30px;
-                    padding:1px 0 3px 10px;
+                    padding:1px 0 3px 5px;
                 }
                 .label-block{
+                    align-items: baseline;
                     background: rgb(64, 158, 255);
+                    border-radius: 3px;
+                    color: #FFF;
                     display: flex;
                     flex: 1;
                     height: 26px;
                     line-height: 26px;
+                    margin: 2px 5px 2px 0;
+                    max-width: max-content;
                     position: relative;
                     padding: 0px 5px;
-                    margin: 2px 5px 2px 0;
-                    border-radius: 3px;
-                    align-items: baseline;
-                    color: #FFF;
                     width: 50%;
                     span{
                         display: inline-block;
@@ -445,7 +446,6 @@ export default {
                     }
                     i{
                         color: #FFF;
-                        margin-left: 8px;
                         font-size: 12px;
                         cursor: pointer;
                         display: flex; 
@@ -469,7 +469,7 @@ export default {
             height:12px;
             overflow: hidden;
             position: absolute;
-            right: 10px;
+            right: 7px;
             top: 50%;
             margin-top: -6px;
             cursor: pointer;
@@ -497,7 +497,7 @@ export default {
             font-size: 10px;
             line-height: 12px;
             position: absolute;
-            right: 10px;
+            right: 7px;
             top: 5px;
             text-align: center;
             width: 12px;
