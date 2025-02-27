@@ -139,6 +139,9 @@ export default {
                 this.initData(val, 'watch')
             },
             deep: true
+        },
+        initValue(){
+            this.setValue()
         }
     },
     data(){
@@ -214,7 +217,7 @@ export default {
             this.sourceData = JSON.parse(JSON.stringify(data));
             this.optionData = JSON.parse(JSON.stringify(data));
             this.totalPage = Math.ceil(this.optionData.length/this.pageSize);
-            if(!type) this.setValue();
+            this.setValue();
         },
         filters(){
             if(this.isComposing) return;
