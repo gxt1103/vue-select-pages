@@ -321,8 +321,9 @@ export default {
             }
             return selectedArray;
         },
-        clearSelect(value){
-            this.setValue(value);
+        clearSelect(){
+            this.selectIds = [];
+            this.selectData = [];
         },
         prev(){
             if(this.page>1) this.page--;
@@ -373,7 +374,8 @@ export default {
             }
         },
         clearAll(){
-            this.setValue([]);
+            this.selectIds = [];
+            this.selectData = [];
             this.$emit('selectChange', this.radio?this.selectIds[0]:this.selectIds)
         }
     }
