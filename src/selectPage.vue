@@ -183,18 +183,18 @@ export default {
     },
     methods:{
         setValue(value){
-            this.selectIds = [];
-            this.selectData = [];
             let initValue = this.initValue;
             if(value) initValue = value;
             if(Object.prototype.toString.call(initValue) === '[object Array]'){
                 if(initValue.length>0 && initValue[0][this.prop.value]){ //如果传入数组对象直接显示
+                    this.selectIds = [];
                     initValue.forEach(d => {
                         this.selectIds.push(d[this.prop.value]);
                     })
                     this.selectData = [...initValue];
                 } else {
                     this.selectIds = initValue;
+                    this.selectData = [];
                     this.optionData.forEach(d => {
                         if(initValue.indexOf(d[this.prop.value]) !== -1){
                             this.selectData.push(d);
@@ -205,6 +205,7 @@ export default {
             } else {
                 if(initValue && this.selectIds.indexOf(initValue) == -1){ //设置初始值
                     this.selectIds = [initValue];
+                    this.selectData = [];
                     this.optionData.forEach(d => {
                         if(initValue === d[this.prop.value]){
                             this.selectData.push(d);
