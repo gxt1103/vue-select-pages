@@ -23,7 +23,7 @@
             </div>
             <!--关闭-->
             <i class="select-close" :class="{'select-expend': show}"></i>
-            <div class="close-pop-page" v-if="selectData.length" @click="clearAll">x</div>
+            <div class="close-pop-page" v-if="selectData.length && !disabled" @click="clearAll">x</div>
         </div>
         
         <!--展开内容-->
@@ -403,6 +403,8 @@ export default {
             }
         }
         .select-disabled{
+            background: #f8f8f8;
+            color: #666;
             cursor: not-allowed;
         }
        
