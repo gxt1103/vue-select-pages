@@ -356,10 +356,10 @@ export default {
                 this.$set(this.dropStyle, 'right', 'auto');
             }
         },
-        loadData(){ //远程数据加载
+        loadData(keyword){ //远程数据加载
             if (this.remote && typeof this.remoteMethod === 'function') {
                 this.loading = true;
-                this.remoteMethod(this.keyword, (data, totalPage)=>{
+                this.remoteMethod(keyword ? keyword : this.keyword, (data, totalPage)=>{
                     this.optionData = data;
                     this.totalPage = totalPage?totalPage:1;
                     this.loading = false;
