@@ -131,6 +131,10 @@ export default {
         disabled:{
             type: Boolean,
             default: false
+        },
+        isAbsolute: { //弹窗是否为绝对定位
+            type: Boolean,
+            default: false
         }
     },
     watch:{
@@ -345,6 +349,9 @@ export default {
                     marginTop: '10px',
                     width: this.$refs.selectPageRef.clientWidth+'px'
                 }
+            }
+            if (this.isAbsolute) {
+                this.dropStyle.position = 'absolute';
             }
             let popWidth = this.$refs.selectOptionRef.offsetWidth;
             let selectWidth = this.$refs.selectPageRef.offsetWidth;
