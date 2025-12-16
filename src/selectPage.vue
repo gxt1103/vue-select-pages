@@ -199,7 +199,7 @@ export default {
                 } else {
                     this.selectIds = initValue;
                     this.selectData = [];
-                    this.optionData.forEach(d => {
+                    this.sourceData.forEach(d => {
                         if(initValue.indexOf(d[this.prop.value]) !== -1){
                             this.selectData.push(d);
                         }
@@ -210,7 +210,7 @@ export default {
                 if(initValue && this.selectIds.indexOf(initValue) == -1){ //设置初始值
                     this.selectIds = [initValue];
                     this.selectData = [];
-                    this.optionData.forEach(d => {
+                    this.sourceData.forEach(d => {
                         if(initValue === d[this.prop.value]){
                             this.selectData.push(d);
                         }
@@ -368,6 +368,7 @@ export default {
                 this.loading = true;
                 this.remoteMethod(keyword ? keyword : this.keyword, (data, totalPage)=>{
                     this.optionData = data;
+                    this.sourceData = data;
                     this.totalPage = totalPage?totalPage:1;
                     this.loading = false;
                     this.$nextTick(()=> {
