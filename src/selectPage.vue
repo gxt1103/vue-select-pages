@@ -15,7 +15,7 @@
                                 <i class="el-icon-close" @click.stop="removeSelect(index)"></i>
                             </div>
                             <div class="label-block" :style="{background:theme?theme:'#409eff'}" v-if="selectData.length>showCount">
-                                + {{selectData.length - showCount}}
+                                +{{selectData.length - showCount}}
                             </div>
                         </template>
                     </div>
