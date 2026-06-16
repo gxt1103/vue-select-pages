@@ -283,7 +283,6 @@ export default {
             this.show = false;
             this.keyword = '';
             this.filters();
-
         },
         removeSelect(index){
             if(this.disabled) return;

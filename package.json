@@ -1,6 +1,10 @@
 {
   "name": "vue-select-pages",
+<<<<<<< HEAD
   "version": "1.7.2",
+=======
+  "version": "1.7.1",
+>>>>>>> ff730bafa7c88ba2204803a14cbe3ca797d66319
   "description": "vue 分页，远程下拉框",
   "main": "src/index.js",
   "keywords": [
