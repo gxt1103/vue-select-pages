@@ -168,7 +168,7 @@ export default {
     mounted(){
         if(this.data.length) this.initData(this.data);
         window.addEventListener('click', (e)=>{
-            if(!this.$el.contains(e.target)){
+            if(!this.$el.contains(e.target) && this.show){
                 this.closed();
             }
         })
