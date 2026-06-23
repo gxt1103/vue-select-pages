@@ -32,7 +32,13 @@
                 <span class="search-icon"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjkzNDQ2NjE1MTg5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjQwMjgiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+PHBhdGggZD0iTTUxMS45NzU4OTIgMTkxLjI5Njk0NWEyMy4yMzQ2NjEgMjMuMjM0NjYxIDAgMSAwIDAgNDYuOTM0MDE0IDIwMi4zMTU4MDggMjAyLjMxNTgwOCAwIDAgMSAyMDIuMzE1ODA4IDIwMi4zMTU4MDggMjMuMjM0NjYxIDIzLjIzNDY2MSAwIDAgMCA0Ni45MzQwMTUgMCAyNDkuMTkxNzM2IDI0OS4xOTE3MzYgMCAwIDAtMjQ5LjI0OTgyMy0yNDkuMjQ5ODIyeiIgZmlsbD0iIzUxNTE1MSIgcC1pZD0iNDAyOSI+PC9wYXRoPjxwYXRoIGQ9Ik0xMDA5LjMxMzgwNSA5NTguMzg5MjY4bC0xNzIuODA3Nzg5LTE3Mi44MDc3ODlhNDc1LjAzMjYzOCA0NzUuMDMyNjM4IDAgMSAwLTU0LjM2OTEwNiA1My41NTU4OTNsMTczLjIxNDM5NSAxNzMuMjE0Mzk2YTM4LjE2MjkzIDM4LjE2MjkzIDAgMSAwIDUzLjk2MjUtNTMuOTYyNXogbS01MzMuMTE5MjktOTAuMDM0MzFhMzkzLjA3MjM3MyAzOTMuMDcyMzczIDAgMSAxIDM5My45NDM2NzItMzkyLjA4NDkgMzkzLjA3MjM3MyAzOTMuMDcyMzczIDAgMCAxLTM5My45NDM2NzIgMzkyLjA4NDl6IiBmaWxsPSIjNTE1MTUxIiBwLWlkPSI0MDMwIj48L3BhdGg+PC9zdmc+"></span>
                 <input type="text" ref="filterInput" :placeholder="searchTips" v-model="keyword" @input="filters">
             </div>
+            <div v-if="!radio && isShowAll" class="select-option select-all">
+                <label class="select-checkbox" @click.stop="selectAll">
+                    <span class="select-checkbox-input" :class="{'is-checked': isAll}"></span> 全选
+                </label>
+            </div>
             <div class="scroll-body" v-if="optionData.length>0">
+                
                 <div class="select-option" :class="{'selected': radio && selectIds.indexOf(list[prop.value]) != -1}" v-for="(list, index) in optionData.slice(isPage && !remote?(page-1)*pageSize:0, (isPage && !remote?(page*pageSize):optionData.length))" :key="index" @click="selectSingle(list)">
                     <div class="select-option-content" v-if="radio">
                         <slot name="title" v-bind:row="list">{{ texts(list) }}</slot>
@@ -135,6 +141,10 @@ export default {
         isAbsolute: { //弹窗是否为绝对定位
             type: Boolean,
             default: false
+        },
+        isShowAll: { //是否显示全选
+            type: Boolean,
+            default: false
         }
     },
     watch:{
@@ -156,6 +166,7 @@ export default {
             show: false,
             selectData: [],//选中的数据
             selectIds:[], //选中的id
+            isAll: false, // 是否全选
             sourceData: [],
             optionData: [], //下拉数据
             dropStyle: {},
@@ -386,6 +397,10 @@ export default {
             this.selectIds = [];
             this.selectData = [];
             this.$emit('selectChange', this.radio?this.selectIds[0]:this.selectIds)
+        },
+        selectAll(){
+            this.isAll = !this.isAll;
+            this.selectIds = this.isAll?this.optionData.map(d => d[this.prop.value]):[];
         }
     }
 }
@@ -573,82 +588,6 @@ export default {
                 overflow-x: hidden;
                 overflow-y: auto;
                 position: relative;
-                .select-option{
-                    display: flex;
-                    align-items: center;
-                    font-size: 12px;
-                    line-height: 32px;
-                    position: relative;
-                    padding: 0 10px;
-                    cursor: pointer;
-                    .select-option-content{
-                        display: flex;
-                        position: relative;
-                        // overflow: hidden;
-                        white-space: nowrap;
-                        // text-overflow: ellipsis;
-                        color: #666;
-                        width: calc(100% - 20px);
-                    }
-                    .select-checkbox{
-                        color: #666;
-                        cursor: pointer;
-                        display: inline-block;
-                        font-size: 12px;
-                        position: relative;
-                        font-weight: 400;
-                        white-space: nowrap;
-                        user-select: none;
-                        .select-checkbox-input{
-                            background-color: #fff;
-                            box-sizing: border-box;
-                            border: 1px solid #dcdfe6;
-                            cursor: pointer;
-                            display: inline-block;
-                            height:14px;
-                            line-height: 1;
-                            margin-right:5px;
-                            margin-top:-3px;
-                            outline: none;
-                            position: relative;
-                            vertical-align: middle;
-                            width: 14px;
-                            transition:border-color .25s cubic-bezier(.71,-.46,.29,1.46),background-color .25s cubic-bezier(.71,-.46,.29,1.46);
-                            &::after{
-                                box-sizing: content-box;
-                                content: "";
-                                border: 1px solid #fff;
-                                border-left: 0;
-                                border-top: 0;
-                                height: 7px;
-                                left: 4px;
-                                position: absolute;
-                                top: 1px;
-                                transform: rotate(45deg) scaleY(0);
-                                width: 3px;
-                                transition: transform .15s ease-in .05s;
-                                transform-origin: center;
-                            }
-                        }
-                        .is-checked{
-                            background-color: #409eff;
-                            border-color: #409eff;
-                            &::after{
-                                transform: rotate(45deg) scaleY(1);
-                            }
-                        }
-                    }
-                    
-                    &:hover{
-                        background: rgb(220, 223, 230);
-                    }
-                    &.selected{
-                        background: #409eff;
-                        .select-option-content{
-                            color: #fff;
-                        }
-                    }
-                }
                 .select-loading{
                     align-items: center;
                     background: rgba(0, 0, 0, 0.4);
@@ -704,6 +643,85 @@ export default {
                     border-radius: 2em;
                     background: #fff;
                 }
+            }
+            .select-option{
+                display: flex;
+                align-items: center;
+                font-size: 12px;
+                line-height: 32px;
+                position: relative;
+                padding: 0 10px;
+                cursor: pointer;
+                .select-option-content{
+                    display: flex;
+                    position: relative;
+                    // overflow: hidden;
+                    white-space: nowrap;
+                    // text-overflow: ellipsis;
+                    color: #666;
+                    width: calc(100% - 20px);
+                }
+                .select-checkbox{
+                    color: #666;
+                    cursor: pointer;
+                    display: inline-block;
+                    font-size: 12px;
+                    position: relative;
+                    font-weight: 400;
+                    white-space: nowrap;
+                    user-select: none;
+                    .select-checkbox-input{
+                        background-color: #fff;
+                        box-sizing: border-box;
+                        border: 1px solid #dcdfe6;
+                        cursor: pointer;
+                        display: inline-block;
+                        height:14px;
+                        line-height: 1;
+                        margin-right:5px;
+                        margin-top:-3px;
+                        outline: none;
+                        position: relative;
+                        vertical-align: middle;
+                        width: 14px;
+                        transition:border-color .25s cubic-bezier(.71,-.46,.29,1.46),background-color .25s cubic-bezier(.71,-.46,.29,1.46);
+                        &::after{
+                            box-sizing: content-box;
+                            content: "";
+                            border: 1px solid #fff;
+                            border-left: 0;
+                            border-top: 0;
+                            height: 7px;
+                            left: 4px;
+                            position: absolute;
+                            top: 1px;
+                            transform: rotate(45deg) scaleY(0);
+                            width: 3px;
+                            transition: transform .15s ease-in .05s;
+                            transform-origin: center;
+                        }
+                    }
+                    .is-checked{
+                        background-color: #409eff;
+                        border-color: #409eff;
+                        &::after{
+                            transform: rotate(45deg) scaleY(1);
+                        }
+                    }
+                }
+                
+                &:hover{
+                    background: rgb(220, 223, 230);
+                }
+                &.selected{
+                    background: #409eff;
+                    .select-option-content{
+                        color: #fff;
+                    }
+                }
+            }
+            .select-all{
+                box-shadow: 1px 1px 5px #eee;
             }
             .select-none{
                 color: #999;
