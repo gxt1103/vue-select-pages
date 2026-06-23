@@ -401,6 +401,8 @@ export default {
         selectAll(){
             this.isAll = !this.isAll;
             this.selectIds = this.isAll?this.optionData.map(d => d[this.prop.value]):[];
+            this.selectData = this.isAll?JSON.parse(JSON.stringify(this.optionData)):[];
+            this.$emit('selectChange', this.selectIds)
         }
     }
 }
